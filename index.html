@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Question For Shasha 💜</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --midnight:#170821;
+    --plum:#2a0f3d;
+    --rose:#ff4d79;
+    --rose-soft:#ff8fab;
+    --gold:#ffd166;
+    --white:#fff6f9;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{
+    height:100%;
+    overflow-x:hidden;
+    background:radial-gradient(ellipse at 50% 0%, var(--plum), var(--midnight) 70%);
+    font-family:'Poppins',sans-serif;
+    color:var(--white);
+  }
+  #stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
+  #heartsBg{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+  .drift{
+    position:absolute;
+    bottom:-10%;
+    font-size:22px;
+    opacity:.65;
+    animation:driftUp linear infinite;
+    filter:drop-shadow(0 0 6px rgba(255,77,121,.6));
+  }
+  @keyframes driftUp{
+    0%{transform:translateY(0) rotate(0deg);opacity:0;}
+    10%{opacity:.7;}
+    100%{transform:translateY(-110vh) rotate(360deg);opacity:0;}
+  }
+
+  .stage{
+    position:relative;
+    z-index:2;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:40px 20px 70px;
+    text-align:center;
+  }
+
+  .eyebrow{
+    letter-spacing:6px;
+    text-transform:uppercase;
+    font-size:12px;
+    color:var(--gold);
+    opacity:.9;
+    margin-bottom:14px;
+  }
+
+  /* 3D heart */
+  .heart-stage{
+    width:180px;
+    height:180px;
+    perspective:900px;
+    margin-bottom:10px;
+  }
+  .heart3d{
+    position:relative;
+    width:100%;
+    height:100%;
+    transform-style:preserve-3d;
+    animation:spin3d 7s linear infinite, pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes spin3d{
+    from{transform:rotateY(0deg) rotateX(8deg);}
+    to{transform:rotateY(360deg) rotateX(8deg);}
+  }
+  @keyframes pulse{
+    0%,100%{filter:drop-shadow(0 0 18px rgba(255,77,121,.65));}
+    50%{filter:drop-shadow(0 0 34px rgba(255,209,102,.7));}
+  }
+  .heart3d svg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    backface-visibility:visible;
+  }
+  .heart3d svg.back{ transform: rotateY(180deg); }
+
+  h1{
+    font-family:'Playfair Display',serif;
+    font-weight:700;
+    font-size:clamp(28px,6vw,46px);
+    line-height:1.2;
+    margin:10px 0 6px;
+    background:linear-gradient(120deg,var(--white),var(--rose-soft) 50%,var(--gold));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .signed{
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    color:var(--gold);
+    font-size:15px;
+    margin-bottom:26px;
+    letter-spacing:1px;
+  }
+
+  .photo-wrap{
+    width:150px;height:150px;border-radius:50%;
+    margin:8px auto 26px;
+    position:relative;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--rose),var(--gold));
+    padding:5px;
+    animation:ringGlow 2.4s ease-in-out infinite;
+  }
+  @keyframes ringGlow{
+    0%,100%{box-shadow:0 0 22px rgba(255,77,121,.55);}
+    50%{box-shadow:0 0 36px rgba(255,209,102,.65);}
+  }
+  .photo-wrap img{
+    width:100%;height:100%;border-radius:50%;object-fit:cover;
+    border:3px solid var(--midnight);
+    display:block;
+  }
+  .photo-wrap .fallback{
+    width:100%;height:100%;border-radius:50%;
+    border:3px solid var(--midnight);
+    background:var(--plum);
+    display:flex;align-items:center;justify-content:center;
+    font-size:52px;
+  }
+
+  .letter{
+    max-width:560px;
+    font-size:16px;
+    line-height:1.85;
+    color:#fbe9ef;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,209,102,.25);
+    padding:26px 28px;
+    border-radius:18px;
+    backdrop-filter:blur(6px);
+    margin-bottom:36px;
+  }
+  .letter b{color:var(--gold);}
+
+  .question{
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    font-size:clamp(20px,4vw,28px);
+    margin-bottom:30px;
+    color:var(--white);
+  }
+
+  .btn-row{
+    position:relative;
+    display:flex;
+    gap:26px;
+    justify-content:center;
+    align-items:center;
+    min-height:80px;
+    width:100%;
+    max-width:420px;
+  }
+  button{
+    font-family:'Poppins',sans-serif;
+    font-weight:600;
+    font-size:17px;
+    padding:16px 38px;
+    border-radius:50px;
+    border:none;
+    cursor:pointer;
+    transition:transform .15s ease;
+  }
+  #yesBtn{
+    background:linear-gradient(120deg,var(--rose),#ff2d63);
+    color:#fff;
+    box-shadow:0 8px 24px rgba(255,45,99,.45);
+  }
+  #yesBtn:hover{transform:scale(1.08);}
+  #noBtn{
+    background:transparent;
+    color:var(--rose-soft);
+    border:1.5px solid rgba(255,143,171,.6);
+    position:absolute;
+  }
+
+  .whatsapp-note{
+    margin-top:22px;
+    font-size:13px;
+    color:#d9b8ff;
+    opacity:.8;
+    max-width:420px;
+  }
+
+  /* Celebration screen */
+  #celebration{
+    position:fixed;inset:0;
+    z-index:50;
+    display:none;
+    align-items:center;justify-content:center;
+    flex-direction:column;
+    text-align:center;
+    background:radial-gradient(ellipse at 50% 30%, #3a0e4d, #170821 75%);
+    overflow:hidden;
+    padding:20px;
+  }
+  #celebration h2{
+    font-family:'Playfair Display',serif;
+    font-size:clamp(32px,7vw,54px);
+    color:var(--gold);
+    text-shadow:0 0 30px rgba(255,209,102,.6);
+    margin-bottom:14px;
+  }
+  #celebration p{
+    max-width:520px;
+    font-size:17px;
+    color:#ffe3ee;
+    margin-bottom:20px;
+  }
+  .balloon{
+    position:absolute;
+    bottom:-140px;
+    width:60px;height:76px;
+    border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation:floatUp linear forwards;
+    opacity:.95;
+  }
+  .balloon::after{
+    content:'';
+    position:absolute;
+    left:50%;bottom:-40px;
+    width:2px;height:40px;
+    background:rgba(255,255,255,.5);
+    transform:translateX(-50%);
+  }
+  @keyframes floatUp{
+    0%{transform:translateY(0) translateX(0) rotate(0deg);}
+    50%{transform:translateY(-60vh) translateX(30px) rotate(8deg);}
+    100%{transform:translateY(-125vh) translateX(-20px) rotate(-6deg);opacity:0;}
+  }
+  .confetti{
+    position:absolute;
+    top:-20px;
+    width:9px;height:14px;
+    opacity:.9;
+    animation:confettiFall linear forwards;
+  }
+  @keyframes confettiFall{
+    0%{transform:translateY(0) rotate(0deg);}
+    100%{transform:translateY(110vh) rotate(540deg);}
+  }
+  .cel-heart{
+    position:absolute;
+    bottom:-40px;
+    font-size:26px;
+    animation:driftUp linear forwards;
+  }
+
+  #musicToggle{
+    margin-top:18px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,209,102,.4);
+    color:var(--gold);
+    padding:10px 22px;
+    border-radius:30px;
+    font-size:14px;
+    display:none; /* only shown if autoplay was blocked by the browser */
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important; animation-iteration-count:1 !important;}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+<div id="heartsBg"></div>
+
+<div class="stage">
+  <div class="eyebrow">a message from mgee</div>
+
+  <div class="heart-stage">
+    <div class="heart3d">
+      <svg class="front" viewBox="0 0 32 29" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#ff4d79" d="M23.6.1c-3 0-5.7 1.6-7.6 4.1C14.1 1.6 11.4 0 8.4 0 3.8 0 0 3.8 0 8.6c0 8.4 9.9 14.9 15.6 19.9.2.2.6.2.8 0C22.1 23.5 32 17 32 8.6 32 3.8 28.2.1 23.6.1z"/>
+      </svg>
+      <svg class="back" viewBox="0 0 32 29" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#ffd166" d="M23.6.1c-3 0-5.7 1.6-7.6 4.1C14.1 1.6 11.4 0 8.4 0 3.8 0 0 3.8 0 8.6c0 8.4 9.9 14.9 15.6 19.9.2.2.6.2.8 0C22.1 23.5 32 17 32 8.6 32 3.8 28.2.1 23.6.1z"/>
+      </svg>
+    </div>
+  </div>
+
+  <h1>To Shasha, with all my heart</h1>
+  <div class="signed">MGEE</div>
+
+  <div class="photo-wrap">
+    <img src="shasha.jpg" alt="Shasha" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+    <div class="fallback" style="display:none;">💗</div>
+  </div>
+
+  <p class="letter">
+    <b>Shasha,</b>Hey Shasha ❤️,
+
+I've been wanting to tell you something for a while now. Every time we talk or I think about you, I realize just how special you are to me. Your smile, your personality, and the way you make me feel have made me fall in love with you.
+
+I know this might come as a surprise, but I wanted to be honest about how I feel. I really care about you, and I'd love the chance to get to know you even better.
+
+So, I have one important question...
+
+**Shasha, will you be my girlfriend?** ❤️
+
+No matter what your answer is, I'll respect it completely. I just wanted you to know how I truly feel.
+
+Take your time, and thank you for reading this. 💕
+ </p>
+
+  <p class="question">So, Shasha — will you be my girlfriend? 💫</p>
+
+  <div class="btn-row">
+    <button id="yesBtn" onclick="celebrate()">Yes, I will 💖</button>
+    <button id="noBtn" onmouseover="dodge()" ontouchstart="dodge()">No</button>
+  </div>
+
+  <p class="whatsapp-note">KAO RATA SHASHA NEH MY WIFEEEEEE</p>
+</div>
+
+<div id="celebration">
+  <h2>She said YES! 🎉</h2>
+  <p>Shasha just made mgee the happiest person alive. This is the beginning of something beautiful. 💜</p>
+  <button id="musicToggle" onclick="toggleMusic()">🔊 Play our song</button>
+</div>
+
+<audio id="bgSong" src="BABEVID.mp3" loop></audio>
+
+<script>
+  // starfield
+  const starCanvas = document.getElementById('stars');
+  const sctx = starCanvas.getContext('2d');
+  function resizeStars(){
+    starCanvas.width = window.innerWidth;
+    starCanvas.height = window.innerHeight;
+  }
+  resizeStars();
+  window.addEventListener('resize', resizeStars);
+  const stars = Array.from({length:120}, () => ({
+    x: Math.random()*window.innerWidth,
+    y: Math.random()*window.innerHeight,
+    r: Math.random()*1.4+.2,
+    a: Math.random()
+  }));
+  function drawStars(){
+    sctx.clearRect(0,0,starCanvas.width,starCanvas.height);
+    sctx.fillStyle = '#fff';
+    stars.forEach(s=>{
+      s.a += (Math.random()-.5)*.05;
+      sctx.globalAlpha = Math.max(0,Math.min(1,s.a));
+      sctx.beginPath();
+      sctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      sctx.fill();
+    });
+    requestAnimationFrame(drawStars);
+  }
+  drawStars();
+
+  // floating hearts background
+  const heartsBg = document.getElementById('heartsBg');
+  const heartEmojis = ['💗','💖','💕','💘','❤️'];
+  function spawnHeart(){
+    const h = document.createElement('div');
+    h.className='drift';
+    h.textContent = heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
+    h.style.left = Math.random()*100+'vw';
+    h.style.animationDuration = (7+Math.random()*8)+'s';
+    h.style.fontSize = (16+Math.random()*20)+'px';
+    heartsBg.appendChild(h);
+    setTimeout(()=>h.remove(), 16000);
+  }
+  setInterval(spawnHeart, 500);
+
+  // dodge the No button
+  const noBtn = document.getElementById('noBtn');
+  const row = document.querySelector('.btn-row');
+  function dodge(){
+    const rowRect = row.getBoundingClientRect();
+    const maxX = rowRect.width - noBtn.offsetWidth - 10;
+    const maxY = 60;
+    const x = Math.random()*maxX;
+    const y = (Math.random()-0.5)*maxY;
+    noBtn.style.left = x+'px';
+    noBtn.style.top = y+'px';
+  }
+
+  function celebrate(){
+    document.getElementById('celebration').style.display='flex';
+    document.body.style.overflow='hidden';
+    launchConfettiAndBalloons();
+
+    // Try to play the local mp3 immediately (this click IS the user gesture
+    // browsers require, so this should just work if song.mp3 exists).
+    const audio = document.getElementById('bgSong');
+    audio.currentTime = 0;
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          document.getElementById('musicToggle').textContent = '🔇 Pause our song';
+          document.getElementById('musicToggle').style.display = 'inline-block';
+        })
+        .catch(() => {
+          // song.mp3 missing or blocked: reveal the manual button as a fallback.
+          // The Spotify embed above will still attempt its own autoplay independently.
+          document.getElementById('musicToggle').style.display = 'inline-block';
+        });
+    }
+  }
+
+  function toggleMusic(){
+    const audio = document.getElementById('bgSong');
+    const btn = document.getElementById('musicToggle');
+    if(audio.paused){
+      audio.play().catch(()=>{});
+      btn.textContent = '🔇 Pause our song';
+    } else {
+      audio.pause();
+      btn.textContent = '🔊 Play our song';
+    }
+  }
+
+  function launchConfettiAndBalloons(){
+    const colors = ['#ff4d79','#ffd166','#ff8fab','#c77dff','#ffffff'];
+    const cel = document.getElementById('celebration');
+
+    for(let i=0;i<60;i++){
+      setTimeout(()=>{
+        const c = document.createElement('div');
+        c.className='confetti';
+        c.style.left = Math.random()*100+'vw';
+        c.style.background = colors[Math.floor(Math.random()*colors.length)];
+        c.style.animationDuration = (2.5+Math.random()*2)+'s';
+        cel.appendChild(c);
+        setTimeout(()=>c.remove(), 5000);
+      }, i*60);
+    }
+
+    for(let i=0;i<14;i++){
+      setTimeout(()=>{
+        const b = document.createElement('div');
+        b.className='balloon';
+        b.style.left = Math.random()*90+'vw';
+        b.style.background = colors[Math.floor(Math.random()*colors.length)];
+        b.style.animationDuration = (6+Math.random()*4)+'s';
+        cel.appendChild(b);
+        setTimeout(()=>b.remove(), 11000);
+      }, i*250);
+    }
+
+    function celHeart(){
+      const h = document.createElement('div');
+      h.className='cel-heart';
+      h.textContent = heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
+      h.style.left = Math.random()*100+'vw';
+      h.style.animationDuration = (5+Math.random()*5)+'s';
+      cel.appendChild(h);
+      setTimeout(()=>h.remove(), 11000);
+    }
+    const heartInterval = setInterval(celHeart, 300);
+    setTimeout(()=>clearInterval(heartInterval), 9000);
+
+    // Notify mgee via WhatsApp
+    setTimeout(()=>{
+      window.open('https://wa.me/26659551512?text=' + encodeURIComponent('Yes mgee, I will be your girlfriend 💖'), '_blank');
+    }, 1200);
+  }
+</script>
+
+</body>
+</html>
